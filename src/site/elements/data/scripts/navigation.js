@@ -23,6 +23,7 @@ const historyFields = [
     'request.method',
     'request.url',
     'request.variables',
+    'response.status',
 ];
 const environmentFields = ['id', 'name'];
 
@@ -89,9 +90,14 @@ function createHistoryNavItem(historyEntry) {
         requestURI = compiledRequest.url.substr(index);
     }
 
+    let requestMethod = compiledRequest.method;
+    requestMethod = "DELETE" === requestMethod ? "DEL" : requestMethod;
+    requestMethod = "OPTIONS" === requestMethod ? "OPT" : requestMethod;
     return new Item({
-        title: `${formatTime(historyEntry.time)} ${requestTitle}`,
-        subtitle: `${compiledRequest.method} ${requestURI}`,
+        method: `${requestMethod}`,
+        status: `${historyEntry.response.status}`,
+        title: `${requestTitle}`,
+        requestURI: `${requestURI}`,
         action: {
             url: `#/request/${historyEntry.request.id || ''}/history/${
                 historyEntry.id

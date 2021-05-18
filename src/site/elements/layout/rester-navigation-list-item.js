@@ -78,6 +78,39 @@ class RESTerNavigationListItem extends PolymerElement {
                     transform: rotate(-180deg);
                 }
 
+                .method {
+                    text-align: center;
+                    width: 50px;
+                }
+                .method-DEL, .method-DELETE {
+                    background-color: red;
+                }
+                .method-GET {
+                    background-color: #2392f7;
+                }
+                .method-POST {
+                    background-color: #13c20f;
+                    color: black;
+                }
+                .method-PUT, .method-PATCH {
+                    background-color: #ff9000;
+                    color: black;
+                }
+                .method-HEAD, .method-OPT, .method-OPTIONS {
+                    background-color: #ccc;
+                    color: black;
+                }
+
+                .status-200, .status-204 {
+                    color: #0c0;
+                }
+                .status-400, .status-401, .status-403, .status-404, .status-405, .status-413, .status-414, .status-415 {
+                    color: red;
+                }
+                .status-422, .status-500, .status-501, .status-502, .status-504 {
+                    color: red;
+                }
+
                 .subtitle {
                     white-space: nowrap;
                 }
@@ -97,14 +130,15 @@ class RESTerNavigationListItem extends PolymerElement {
             </template>
 
             <template is="dom-if" if="[[item.isItem]]">
-                <paper-item on-tap="_invokeAction" class="button">
+                <paper-icon-item on-tap="_invokeAction" class="button">
+                    <div class$="method method-[[item.method]]" slot="item-icon">[[item.method]]</div>
                     <paper-ripple></paper-ripple>
                     <paper-item-body
                         two-line
                         style$="padding-left: [[_getIndentionInPixel()]]px;"
                     >
-                        <div>[[item.title]]</div>
-                        <div class="subtitle" secondary>[[item.subtitle]]</div>
+                        <div><font class$="status-[[item.status]]">[[item.status]]</font> [[item.title]]</div>
+                        <div class="subtitle" secondary>[[item.requestURI]]</div>
                     </paper-item-body>
                     <template is="dom-if" if="[[item.secondaryAction]]">
                         <paper-icon-button
@@ -113,7 +147,7 @@ class RESTerNavigationListItem extends PolymerElement {
                             on-tap="_invokeSecondaryAction"
                         ></paper-icon-button>
                     </template>
-                </paper-item>
+                </paper-icon-item>
             </template>
 
             <template is="dom-if" if="[[item.isGroup]]">

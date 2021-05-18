@@ -17,6 +17,7 @@ const historyFields = [
     'request.method',
     'request.url',
     'request.variables',
+    'response.status',
 ];
 const environmentFields = ['id', 'name'];
 
@@ -148,7 +149,7 @@ afterEach(function () {
 test('items are created on startup', async function () {
     expect(nav.items).toEqual([]);
     expect(mockRester.getRequests).toBeCalledWith(requestFields);
-    expect(mockRester.getHistoryEntries).toBeCalledWith(5, historyFields);
+    expect(mockRester.getHistoryEntries).toBeCalledWith(200, historyFields);
 
     settingsLoadedDfd.resolve();
     await Deferred.flush();
