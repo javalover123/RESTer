@@ -74,19 +74,24 @@ function createRequestNavItem(request) {
 }
 
 function createHistoryNavItem(historyEntry) {
-    let requestTitle = '';
-    if (historyEntry.request.id) {
-        requestTitle = `${historyEntry.request.collection} / ${historyEntry.request.title}`;
-    }
-
     const compiledRequest = replaceWithoutProvidedValues(
         historyEntry.request,
         historyEntry.request.variables.values
     );
+    let requestURI = compiledRequest.url;
+
+    let requestTitle = '';
+    if (historyEntry.request.id) {
+        requestTitle = `${historyEntry.request.collection} / ${historyEntry.request.title}`;
+    } else {
+        let index = compiledRequest.url.indexOf("/", 8);
+        requestTitle = compiledRequest.url.substr(0, index);
+        requestURI = compiledRequest.url.substr(index);
+    }
 
     return new Item({
         title: `${formatTime(historyEntry.time)} ${requestTitle}`,
-        subtitle: `${compiledRequest.method} ${compiledRequest.url}`,
+        subtitle: `${compiledRequest.method} ${requestURI}`,
         action: {
             url: `#/request/${historyEntry.request.id || ''}/history/${
                 historyEntry.id

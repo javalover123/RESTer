@@ -77,6 +77,10 @@ class RESTerNavigationListItem extends PolymerElement {
                 .toggle-icon.expanded {
                     transform: rotate(-180deg);
                 }
+
+                .subtitle {
+                    white-space: nowrap;
+                }
             </style>
 
             <template is="dom-if" if="[[item.isSubheader]]">
@@ -100,7 +104,7 @@ class RESTerNavigationListItem extends PolymerElement {
                         style$="padding-left: [[_getIndentionInPixel()]]px;"
                     >
                         <div>[[item.title]]</div>
-                        <div secondary>[[item.subtitle]]</div>
+                        <div class="subtitle" secondary>[[item.subtitle]]</div>
                     </paper-item-body>
                     <template is="dom-if" if="[[item.secondaryAction]]">
                         <paper-icon-button
