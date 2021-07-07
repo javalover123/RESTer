@@ -952,6 +952,13 @@ class RESTerPageRequest extends RESTerLintMixin(
                     this.request.id || ''
                 }/history/${historyId}`;
             })
+            .then((historyId) => {
+                if (!this.request.title || !this.request.collection) {
+                    return;
+                }
+
+                this._saveRequest();
+            })
             .catch((error) => {
                 this._setRequestIsSending(false);
                 if (error.name !== 'AbortError') {
