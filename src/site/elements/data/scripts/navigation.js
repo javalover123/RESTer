@@ -82,7 +82,7 @@ function createHistoryNavItem(historyEntry) {
     let requestURI = compiledRequest.url;
 
     let requestTitle = '';
-    if (historyEntry.request.id) {
+    if (historyEntry.request.id || historyEntry.request.title) {
         requestTitle = `${historyEntry.request.collection} / ${historyEntry.request.title}`;
     } else {
         let index = compiledRequest.url.indexOf("/", 8);
